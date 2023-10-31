@@ -25,7 +25,7 @@ class MainActivity : ComponentActivity()
                 // A surface container using the 'background' color from the theme
                 Surface(modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background) {
-                    DiceAndButton()
+                    DiceRollerApp()
                 }
             }
         }
@@ -36,25 +36,28 @@ fun roll(): Int {
     return (1..6).random()
 }
 
-fun findDice(dice: Int): Int
+fun getDice(dice: Int): Int
 {
-    var newDice =  R.drawable.dice_1
-    when(dice) {
-        1 -> newDice = R.drawable.dice_1
-        2 -> newDice = R.drawable.dice_2
-        3 -> newDice = R.drawable.dice_3
-        4 -> newDice = R.drawable.dice_4
-        5 -> newDice = R.drawable.dice_5
-        6 -> newDice = R.drawable.dice_6
+    return when(dice) {
+        1 -> R.drawable.dice_1
+        2 -> R.drawable.dice_2
+        3 -> R.drawable.dice_3
+        4 -> R.drawable.dice_4
+        5 -> R.drawable.dice_5
+        else -> R.drawable.dice_6
     }
-    return  newDice
 }
 
 @Composable
-fun DiceAndButton(modifier: Modifier = Modifier
+fun DiceRollerApp(modifier: Modifier = Modifier
     .fillMaxSize()
     .wrapContentSize(Alignment.Center)
 ) {
+    DiceAndButton()
+}
+
+@Composable
+fun DiceAndButton() {
     var image by remember { mutableStateOf(1) }
 
     Column(
@@ -62,7 +65,7 @@ fun DiceAndButton(modifier: Modifier = Modifier
         verticalArrangement = Arrangement.Center
     ) {
         Image(
-            painter = painterResource(id = findDice(image)),
+            painter = painterResource(id = getDice(image)),
             contentDescription = "$image"
         )
         Spacer(modifier = Modifier.height(16.dp))
@@ -79,6 +82,6 @@ fun DiceAndButton(modifier: Modifier = Modifier
 fun DiceRollerPreview()
 {
     ComposeDiceRollerTheme {
-        DiceAndButton()
+        DiceRollerApp()
     }
 }
